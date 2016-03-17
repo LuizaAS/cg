@@ -1,0 +1,16 @@
+IMAGENS
+
+PERSONAGEM PRINCIPAL:
+http://www.ninjasoftware.net/images/NinjaSoftware.png 
+
+
+TABELA ASC:
+http://mywebspace.no.sapo.pt/info/tlp11/tabela_ascii.pdf 
+
+USO DE TECLAS ESPECIAIS (setas):
+http://www.inf.pucrs.br/~manssour/OpenGL/Eventos.html 
+
+MODULOS E MAKEFILE:
+http://www.cprogressivo.net/2013/09/Modulos-Como-criar-um-projeto-no-Code-Blocks-para-Organizar-e-dividir-seu-codigo.html 
+http://www.cprogressivo.net/2013/09/Header-cabecalho-o-que-sao-para-que-servem-como-criar-e-usar-seus-arquivos-.h.html
+http://cear.ufpb.br/~isaac/site/progc/compilacao-e-makefile
