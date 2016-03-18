@@ -23,35 +23,36 @@ void desenhaParada(struct parada* p){
 	  		// glDisable(GL_TEXTURE_2D);
    		}
     }
-
 }
 
-struct parada createParada(struct parada p, int tamOrtX, int tamOrty){
-	if (p.estado == inativo) {
-	    p.x=rand()%((tamOrtX/2)-5*p.tamanho);
-	    if (p.x%2==0)
-	      p.x*=-1;
-	    p.tamanho = 10;
-	    p.y=((tamOrty/2)-p.tamanho);
-	    p.estado=ativo;  
+int createParada(struct parada obj[], int i, int tamOrtX, int tamOrty, int nParadasCriadasPorExecucao, int nParadasCriadas){
+	if (obj[i].estado == inativo && nParadasCriadas<=nParadasCriadasPorExecucao) {
+	    obj[i].x=rand()%((tamOrtX/2)-5*obj[i].tamanho);
+	    if (obj[i].x%2==0)
+	      obj[i].x*=-1;
+	    obj[i].tamanho = 10;
+	    obj[i].y=((tamOrty/2)-obj[i].tamanho);
+	    obj[i].estado=ativo;  
+	    nParadasCriadas++;
   	}
-   return p;
+   return nParadasCriadas;
 }
-struct parada paradasCaem(struct parada p, int tamOrtX, int tamOrty){
-  if (p.y>-tamOrty/2 && p.estado == ativo){
-    p.y-=1;
-  }
-  else{
-  	p.estado = inativo;
-    p=createParada(p, tamOrtX ,tamOrty);
-    printf("%d\n", p.estado );
-  }
-    return p;
+void paradasCaem(struct parada obj[], struct personagem *jogador, int tamOrtX, int tamOrty){
+	for (int i = 0, nParadasCriadasPorExecucao=rand()%5, nParadasCriadas = 0 ; i < qntParadas; ++i)  {
+	  if (obj[i].y>-tamOrty/2 && obj[i].estado == ativo){
+	    obj[i].y-=1;
+	  	if(((obj[i].y+obj[i].tamanho)>=(jogador->y-jogador->tamanho)) && ((obj[i].y-obj[i].tamanho)<=(jogador->y+jogador->tamanho) )&& ((obj[i].x+obj[i].tamanho)>=(jogador->x-jogador->tamanho)) && ((obj[i].x-obj[i].tamanho)<=(jogador->x+jogador->tamanho)) && obj[i].estado == ativo ) {
+	      obj[i].estado=inativo;
+    	}
+	  }
+	  else{
+	  	obj[i].estado = inativo;
+	    nParadasCriadas=createParada(obj, i, tamOrtX ,tamOrty, nParadasCriadasPorExecucao, nParadasCriadas);
+	  }
+  	}
 }
-/*struct parada* setupParada(struct parada* p){
-	for (int i = 0; i < qntParadas; ++i)	{
-		p[i].estado = inativo;
-  	
-	}
-	return *p;
-}*/
+void setupParada(struct parada obj[]){
+	for (int i = 0; i < qntParadas; ++i) {
+      obj[i].estado = inativo;
+  	}
+}

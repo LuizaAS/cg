@@ -7,10 +7,9 @@ struct parada {
   int tamanho;
   int tipo;
   est estado;
-  int teste;
 };
 
 void desenhaParada(struct parada* p);
-struct parada createParada(struct parada p, int tamOrtX, int tamOrty);
-struct parada paradasCaem(struct parada p, int tamOrtX, int tamOrty);
-// struct parada* setupParada(struct parada* p);
+int createParada(struct parada obj[], int i, int tamOrtX, int tamOrty, int nParadasCriadasPorExecucao, int nParadasCriadas);
+void paradasCaem(struct parada p[], struct personagem *jogador, int tamOrtX, int tamOrty);
+void setupParada(struct parada obj[]);
