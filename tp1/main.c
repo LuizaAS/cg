@@ -4,67 +4,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "personagem.h"
-#define qntParadas 20
+#include "parada.h"
+
 //Variaveis globais
-int tamOrtX= 500;
+int tamOrtX = 500;
 int tamOrty =600;
 struct personagem jogador;
-struct parada {
-  int x;
-  int y;
-  GLuint textura;
-  int tamanho;
-  int tipo;
-  int estado;
-};
+struct parada obj[qntParadas];
 
-//LOGICA DE UM QUADRADO
-struct parada p;
-void desenhaParada(){
-  if(p.estado==1){
-        glPushMatrix();
-        glColor3f(0,0,0); 
-        glTranslatef(p.x, p.y, 0);
-        /*glEnable(GL_TEXTURE_2D);*/
-        /*glBindTexture(GL_TEXTURE_2D, perso.textura);*/
-        glBegin(GL_QUADS);
-          /*glTexCoord2f(0, 0);*/ glVertex3f(-p.tamanho, -p.tamanho,  0);
-          /*glTexCoord2f(1, 0);*/ glVertex3f( p.tamanho, -p.tamanho,  0);
-          /*glTexCoord2f(1, 1);*/ glVertex3f( p.tamanho,  p.tamanho,  0);
-          /*glTexCoord2f(0, 1);*/ glVertex3f(-p.tamanho,  p.tamanho,  0);
-        glEnd();
-    glPopMatrix();
-  glDisable(GL_TEXTURE_2D);
-  }
-  return;
-}
-void createParada(){
-  if (p.estado==0) {
-    p.x=rand()%((tamOrtX/2)-5*p.tamanho);
-    if (p.x%2==0)
-      p.x*=-1;
-    p.tamanho = 10;
-    p.y=((tamOrty/2)-p.tamanho);
-    p.estado=1;  
-  }
-    
-}
-void paradasCaem(){
-  if (p.y>-tamOrty/2+5*p.tamanho && p.estado == 1){
-    p.y-=1;
-  }
-  else{
-    p.estado=0;
-    createParada();
-  }
-  if(((p.y+p.tamanho)>=(jogador.y-jogador.tamanho)) && ((p.y-p.tamanho)<=(jogador.y+jogador.tamanho) )&& ((p.x+p.tamanho)>=(jogador.x-jogador.tamanho)) && ((p.x-p.tamanho)<=(jogador.x+jogador.tamanho))) {
-      p.estado=0;
+void animacao (){
+  for (int i = 0; i < qntParadas; ++i)  {
+    obj[i] = paradasCaem( obj[i] , tamOrtX, tamOrty);
+    if(((obj[i].y+obj[i].tamanho)>=(jogador.y-jogador.tamanho)) && ((obj[i].y-obj[i].tamanho)<=(jogador.y+jogador.tamanho) )&& ((obj[i].x+obj[i].tamanho)>=(jogador.x-jogador.tamanho)) && ((obj[i].x-obj[i].tamanho)<=(jogador.x+jogador.tamanho)) && obj[i].estado == ativo ) {
+      obj[i].estado=inativo;
+      printf("-1vida\n");
+    }
   }
   glutPostRedisplay();
 }
-void setupParada(){
-  p.estado=0;
-}
+//LOGICA DE UM QUADRADO
+
+
+
 //LOGICA  DE VARIOS QUADRADOS
 // struct parada obj[qntParadas];
 // void createParada (int n) {
@@ -120,7 +81,7 @@ void setupParada(){
 void desenhaCena(void) {
     glClear(GL_COLOR_BUFFER_BIT);
     desenhaPersonagem(jogador);
-    desenhaParada();
+    desenhaParada(obj);
     glutSwapBuffers();
 }
 // Inicia algumas vari�veis de estado
@@ -128,11 +89,11 @@ void inicializa(void) {
     // cor para limpar a tela
     glClearColor(1, 1, 1, 0);// branco
     jogador=setupPersonagem(jogador,-50,-50,25,3);
-    setupParada();
-    createParada();
-/*    for (int i = 0; i < qntParadas; ++i) {
-      obj[i].estado = 0;
-    }*/
+    // obj=setupParada(obj);
+    for (int i = 0; i < qntParadas; ++i) {
+      obj[i].estado = inativo;
+    }
+    obj[0] = createParada(obj[0], tamOrtX, tamOrty);   
 }
 
 // Callback de redimensionamento
@@ -192,7 +153,7 @@ int main(int argc, char **argv)
     glutKeyboardFunc(teclado);
     glutSpecialFunc(teclaEspecial);
     inicializa();
-    glutIdleFunc(paradasCaem);
+    glutIdleFunc(animacao);
     // Entra em loop e nunca sai
     glutMainLoop();
     return 0;

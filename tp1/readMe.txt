@@ -1,4 +1,4 @@
-Compilado no terminal do linux com o comando g++ -o Lista1ex3 Lista1ex3.c -lglut -lGLU -lGL -lm
+Compilado no terminal do linux com o comando g++ -o programa main.c personagem.c -lSOIL -lglut -lGLU -lGL -lm
 
 
 Bibliotecas:

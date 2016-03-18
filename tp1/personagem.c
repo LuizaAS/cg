@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "personagem.h"
+#include "parada.h"
 
-void desenhaPersonagem(struct personagem perso)
-{
+void desenhaPersonagem(struct personagem perso){
     glPushMatrix();                 // Importante!!
       glTranslatef(perso.x, perso.y, 0);
       glEnable(GL_TEXTURE_2D);
