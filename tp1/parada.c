@@ -8,6 +8,7 @@
 #include "parada.h"
 
 
+
 void desenhaParada(struct parada* p){
     for (int i = 0; i < qntParadas; ++i)    {
     	if (p[i].estado == ativo){
@@ -28,11 +29,11 @@ void desenhaParada(struct parada* p){
 }
 
 int createParada(struct parada obj[], int i, int nParadasCriadas, struct parametrosJogo parametro){
-	if (obj[i].estado == inativo && nParadasCriadas<1 && parametro.tempoEntreCriaParadas==0) {
+	if (obj[i].estado == inativo && nParadasCriadas<2 && parametro.tempoEntreCriaParadas==0) {
 	    obj[i].coordenadas.x=rand()%((parametro.tamanhoTela.x/2)-4*obj[i].tamanho);
 	    if (obj[i].coordenadas.x%2==0)
 	      obj[i].coordenadas.x*=-1;
-	    obj[i].tamanho = 15;
+	    obj[i].tamanho = 10;
 	    obj[i].coordenadas.y=((parametro.tamanhoTela.y/2)-obj[i].tamanho);
 	    obj[i].estado=ativo;  
 	    nParadasCriadas++;
@@ -44,7 +45,7 @@ void paradasCaem(struct parada obj[], struct personagem *jogador, struct paramet
 	for (int i = 0, nParadasCriadas = 0 ; i < qntParadas; ++i)  {
 		if (obj[i].coordenadas.y>-parametro.tamanhoTela.y/2 && obj[i].estado == ativo){
 		    obj[i].coordenadas.y-=1;
-		  	if(((obj[i].coordenadas.y+obj[i].tamanho)>=(jogador->coordenadas.y-jogador->tamanho)) && ((obj[i].coordenadas.y-obj[i].tamanho)<=(jogador->coordenadas.y+jogador->tamanho) )&& ((obj[i].coordenadas.x+obj[i].tamanho)>=(jogador->coordenadas.x-jogador->tamanho)) && ((obj[i].coordenadas.x-obj[i].tamanho)<=(jogador->coordenadas.x+jogador->tamanho)) && obj[i].estado == ativo ) {
+		  	if(((obj[i].coordenadas.y+obj[i].tamanho)>=(jogador->coordenadas.y-jogador->tamanho)) && ((obj[i].coordenadas.y-obj[i].tamanho)<=(jogador->coordenadas.y+jogador->tamanho) )&& ((obj[i].coordenadas.x+obj[i].tamanho)>=(jogador->coordenadas.x-jogador->tamanho)) && ((obj[i].coordenadas.x-obj[i].tamanho)<=(jogador->coordenadas.x+jogador->tamanho)) && obj[i].estado == ativo && jogador->estado==1) {
 		      obj[i].estado=inativo;
 		      personagemMorre(jogador);
 	    	}

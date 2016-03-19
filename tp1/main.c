@@ -14,24 +14,26 @@ struct personagem jogador;
 struct parada obj[qntParadas];
 
 void animacao (){
+  int aux;
   parametro.tempoDeJogo++;
   paradasCaem(obj , &jogador, parametro);
   parametro.tempoEntreCriaParadas++;
-  if (parametro.tempoEntreCriaParadas>45)
+  piscaPersonagem (&jogador);
+  if (parametro.tempoEntreCriaParadas>40)
     parametro.tempoEntreCriaParadas = 0;
   glutPostRedisplay();
 }
 
 void desenhaCena(void) {
-    glClear(GL_COLOR_BUFFER_BIT);
-    desenhaPersonagem(jogador);
-    desenhaParada(obj);
-    glutSwapBuffers();
+  glClear(GL_COLOR_BUFFER_BIT);
+  desenhaFundo(parametro);
+  desenhaPersonagem(jogador, parametro.tamanhoTela);
+  desenhaParada(obj);
+  glutSwapBuffers();
 }
 // Inicia algumas vari�veis de estado
 void inicializa(void) {
-    // cor para limpar a tela
-    glClearColor(1, 1, 1, 0);// branco
+    glClearColor(1, 1, 1, 0);
     parametro.tamanhoTela.x = 500;
     parametro.tamanhoTela.y =600;
     jogador=setupPersonagem(jogador,-50,-50,25,3);
@@ -39,7 +41,6 @@ void inicializa(void) {
     setupParametros(&parametro);  
 }
 
-// Callback de redimensionamento
 void redimensiona(int w, int h) {
    glViewport(0, 0, 500, 500);
    glMatrixMode(GL_PROJECTION);
@@ -50,9 +51,9 @@ void redimensiona(int w, int h) {
    parametro.tamanhoTela.x= w;
    parametro.tamanhoTela.y= h;
 }
+
 void teclaEspecial(int key, int x, int y){
   switch(key) {
-      // Tecla ESC
       case GLUT_KEY_RIGHT:
         jogador.coordenadas.x = moveRight(jogador, parametro.tamanhoTela.x);
         break;
@@ -67,7 +68,6 @@ void teclaEspecial(int key, int x, int y){
 // Callback de evento de teclado
 void teclado(unsigned char key, int x, int y) {
    switch(key) {
-      // Tecla ESC
       case 27:
         exit(0);
         break;
@@ -80,21 +80,14 @@ void teclado(unsigned char key, int x, int y) {
    }
 }
 
-// Rotina principal
-int main(int argc, char **argv)
-{
-    // Acordando o GLUT
+int main(int argc, char **argv){
     glutInit(&argc, argv);
-    // Definindo a versão do OpenGL que vamos usar
     glutInitContextVersion(1, 1);
     glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);
-    // Configuração inicial da janela do GLUT
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowSize(500, 500);
     glutInitWindowPosition(100, 100);
-    // Abre a janela
     glutCreateWindow("Luiza TP1");
-    // Registra callbacks para alguns eventos
     srand(time(NULL));
     inicializa();
     glutDisplayFunc(desenhaCena);
@@ -102,7 +95,6 @@ int main(int argc, char **argv)
     glutKeyboardFunc(teclado);
     glutSpecialFunc(teclaEspecial);
     glutIdleFunc(animacao);
-    // Entra em loop e nunca sai
     glutMainLoop();
     return 0;
 }

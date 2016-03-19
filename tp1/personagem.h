@@ -1,15 +1,22 @@
 struct personagem{
 	struct posicao coordenadas;
+  	GLuint texturaAtual;
   	GLuint textura;
+  	GLuint texturaPuso;
   	int tamanho; // id textura
   	// int textura-pulo;
- 	int vidas;
- 	int lista;
+  	int vidas;
+ 	int texturaVidas;
+ 	int tempoPiscando;
+ 	int estado;
 };
 void criaLista(struct personagem perso);
 void personagemMorre(struct personagem *jogador);
-void desenhaPersonagem(struct personagem perso);
+void piscaPersonagem (struct personagem *jogador);
+void desenhaPersonagem(struct personagem jogador, struct posicao tamanhoTela);
+void desenhaVidas (struct personagem jogador, struct posicao tamanhoTela);
 GLuint texturaPersonagem(struct personagem perso);
+int texturaVida (int textura);
 int moveRight(struct personagem perso, int tam);
 int moveLeft(struct personagem perso, int tam);
 struct personagem setupPersonagem( struct personagem perso, int x, int y, int tam, int vidas);
