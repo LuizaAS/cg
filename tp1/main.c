@@ -5,8 +5,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include "menu.h"
-#include "personagem.h"
 #include "parada.h"
+#include "personagem.h"
+
 
 //Variaveis globais
 struct parametrosJogo parametro;
@@ -16,7 +17,7 @@ struct parada obj[qntParadas];
 void animacao (){
   int aux;
   parametro.tempoDeJogo++;
-  paradasCaem(obj , &jogador, parametro);
+  paradasCaem(obj , &jogador, &parametro);
   parametro.tempoEntreCriaParadas++;
   piscaPersonagem (&jogador);
   if (parametro.tempoEntreCriaParadas>40)
@@ -27,19 +28,13 @@ void animacao (){
 void desenhaCena(void) {
   glClear(GL_COLOR_BUFFER_BIT);
   desenhaFundo(parametro);
-  desenhaPersonagem(jogador, parametro.tamanhoTela);
-  desenhaParada(obj);
+  if(parametro.telaAtual==jogo){
+    desenhaPersonagem(jogador, parametro.tamanhoTela);
+    desenhaParada(obj);
+  }
   glutSwapBuffers();
 }
 // Inicia algumas vari�veis de estado
-void inicializa(void) {
-    glClearColor(1, 1, 1, 0);
-    parametro.tamanhoTela.x = 500;
-    parametro.tamanhoTela.y =600;
-    jogador=setupPersonagem(jogador,-50,-50,25,3);
-    setupParada(obj, parametro);
-    setupParametros(&parametro);  
-}
 
 void redimensiona(int w, int h) {
    glViewport(0, 0, 500, 500);
@@ -54,30 +49,53 @@ void redimensiona(int w, int h) {
 
 void teclaEspecial(int key, int x, int y){
   switch(key) {
-      case GLUT_KEY_RIGHT:
-        jogador.coordenadas.x = moveRight(jogador, parametro.tamanhoTela.x);
-        break;
-      case GLUT_KEY_LEFT:
-        jogador.coordenadas.x = moveLeft(jogador, parametro.tamanhoTela.x);
-        break;
-      default:
-         break;
-   }
+    case GLUT_KEY_RIGHT:
+      jogador.coordenadas.x = moveRight(jogador, parametro.tamanhoTela.x);
+      break;
+    case GLUT_KEY_LEFT:
+      jogador.coordenadas.x = moveLeft(jogador, parametro.tamanhoTela.x);
+      break;
+    default:
+      break;
+  }
+  if (parametro.telaAtual==gameOver){
+    inicializa(&parametro, &jogador, obj);
+    parametro.telaAtual=inicial;
+  }
   glutPostRedisplay();
 }
 // Callback de evento de teclado
 void teclado(unsigned char key, int x, int y) {
-   switch(key) {
-      case 27:
-        exit(0);
-        break;
-      case 'r':
-      case 'R':
-        //funcao q reinicia;
-        break;
-      default:
-         break;
-   }
+  switch(key) {
+    case 27:
+      exit(0);
+      break;
+    case 'r':
+    case 'R':
+      if (parametro.telaAtual==jogo){
+        parametro.telaAtual=inicial;
+        inicializa(&parametro, &jogador, obj);
+      }
+      break;
+    case 'p':
+    case 'P':
+      if (parametro.telaAtual==pausa)
+        parametro.telaAtual=jogo;
+      else{
+        if (parametro.telaAtual==jogo)
+          parametro.telaAtual=pausa;
+      }
+    case 's':
+    case 'S':
+      if (parametro.telaAtual==inicial)
+        parametro.telaAtual=jogo;
+    default:
+      break;
+  }
+  if (parametro.telaAtual==gameOver){
+    parametro.telaAtual=inicial;
+  }
+  glutPostRedisplay();
 }
 
 int main(int argc, char **argv){
@@ -89,7 +107,7 @@ int main(int argc, char **argv){
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Luiza TP1");
     srand(time(NULL));
-    inicializa();
+    inicializa(&parametro, &jogador, obj);
     glutDisplayFunc(desenhaCena);
     glutReshapeFunc(redimensiona);
     glutKeyboardFunc(teclado);

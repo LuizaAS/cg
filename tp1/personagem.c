@@ -4,27 +4,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "menu.h"
-#include "personagem.h"
 #include "parada.h"
+#include "personagem.h"
 
-
-void personagemMorre(struct personagem *jogador){
+void personagemMorre(struct personagem *jogador, Tela *telaAtual){
   jogador->vidas--;
   jogador->tempoPiscando=0;
-  jogador->estado = 0;
-  if(jogador->vidas==0)
-    printf("Voce perdeu\n");
+  jogador->estado = inativo;
+  if(jogador->vidas==0){
+      printf("Voce perdeu\n");
+      *telaAtual = gameOver;
+  }
 }
 void piscaPersonagem (struct personagem *jogador){
-  if ( jogador->estado == 0){
+  if ( jogador->estado == inativo ){
     GLint aux = jogador->texturaAtual;
     jogador->texturaAtual = jogador->texturaPuso;
     jogador->texturaPuso = aux;
     jogador->tempoPiscando++;
-    if(jogador->tempoPiscando == 50){
+    if(jogador->tempoPiscando == 200){
       jogador->texturaAtual = jogador->textura;
       jogador->tempoPiscando = 0;
-      jogador-> estado = 1;
+      jogador-> estado = ativo;
     }
   }
 }

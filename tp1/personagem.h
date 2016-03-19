@@ -8,10 +8,10 @@ struct personagem{
   	int vidas;
  	int texturaVidas;
  	int tempoPiscando;
- 	int estado;
+ 	est estado;
 };
 void criaLista(struct personagem perso);
-void personagemMorre(struct personagem *jogador);
+void personagemMorre(struct personagem *jogador, Tela *telaAtual);
 void piscaPersonagem (struct personagem *jogador);
 void desenhaPersonagem(struct personagem jogador, struct posicao tamanhoTela);
 void desenhaVidas (struct personagem jogador, struct posicao tamanhoTela);
