@@ -4,17 +4,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "menu.h"
 #include "personagem.h"
 #include "parada.h"
 
 //Variaveis globais
-int tamOrtX = 500;
-int tamOrty =600;
+struct parametrosJogo parametro;
 struct personagem jogador;
 struct parada obj[qntParadas];
 
 void animacao (){
-  paradasCaem( obj, &jogador, tamOrtX, tamOrty);
+  parametro.tempoDeJogo++;
+  paradasCaem(obj , &jogador, parametro);
+  parametro.tempoEntreCriaParadas++;
+  if (parametro.tempoEntreCriaParadas>45)
+    parametro.tempoEntreCriaParadas = 0;
   glutPostRedisplay();
 }
 
@@ -28,12 +32,11 @@ void desenhaCena(void) {
 void inicializa(void) {
     // cor para limpar a tela
     glClearColor(1, 1, 1, 0);// branco
+    parametro.tamanhoTela.x = 500;
+    parametro.tamanhoTela.y =600;
     jogador=setupPersonagem(jogador,-50,-50,25,3);
-    setupParada(obj);
-   /* for (int i = 0; i < qntParadas; ++i) {
-      obj[i].estado = inativo;
-    }*/
-    createParada(obj, 0, tamOrtX, tamOrty, 1, 0);   
+    setupParada(obj, parametro);
+    setupParametros(&parametro);  
 }
 
 // Callback de redimensionamento
@@ -44,17 +47,17 @@ void redimensiona(int w, int h) {
    glOrtho(-w/2, w/2, -h/2, h/2, -1, 1);
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
-   tamOrtX= w;
-   tamOrty= h;
+   parametro.tamanhoTela.x= w;
+   parametro.tamanhoTela.y= h;
 }
 void teclaEspecial(int key, int x, int y){
   switch(key) {
       // Tecla ESC
       case GLUT_KEY_RIGHT:
-        jogador.x = moveRight(jogador, tamOrtX);
+        jogador.coordenadas.x = moveRight(jogador, parametro.tamanhoTela.x);
         break;
       case GLUT_KEY_LEFT:
-        jogador.x = moveLeft(jogador, tamOrtX);
+        jogador.coordenadas.x = moveLeft(jogador, parametro.tamanhoTela.x);
         break;
       default:
          break;
@@ -67,6 +70,10 @@ void teclado(unsigned char key, int x, int y) {
       // Tecla ESC
       case 27:
         exit(0);
+        break;
+      case 'r':
+      case 'R':
+        //funcao q reinicia;
         break;
       default:
          break;
@@ -89,11 +96,11 @@ int main(int argc, char **argv)
     glutCreateWindow("Luiza TP1");
     // Registra callbacks para alguns eventos
     srand(time(NULL));
+    inicializa();
     glutDisplayFunc(desenhaCena);
     glutReshapeFunc(redimensiona);
     glutKeyboardFunc(teclado);
     glutSpecialFunc(teclaEspecial);
-    inicializa();
     glutIdleFunc(animacao);
     // Entra em loop e nunca sai
     glutMainLoop();
