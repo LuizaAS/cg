@@ -3,8 +3,10 @@
 #include <SOIL/SOIL.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "menu.h"
 #include "parada.h"
+#include "textura.h"
 #include "personagem.h"
 
 void personagemMorre(struct personagem *jogador, Tela *telaAtual){
@@ -30,6 +32,7 @@ void piscaPersonagem (struct personagem *jogador){
   }
 }
 void desenhaVidas (struct personagem jogador, struct posicao tamanhoTela){
+  glEnable(GL_BLEND);
   for (int i = 0, distancia = 0; i < jogador.vidas; ++i, distancia+=20){
   glPushMatrix();                 
   glTranslatef(tamanhoTela.x/2-50-distancia,tamanhoTela.y/2-50 , 0);
@@ -44,11 +47,13 @@ void desenhaVidas (struct personagem jogador, struct posicao tamanhoTela){
   glPopMatrix();
   glDisable(GL_TEXTURE_2D);
   }
+  glDisable(GL_BLEND);
 }
 void desenhaPersonagem(struct personagem jogador, struct posicao tamanhoTela){
   glPushMatrix();                 
   glTranslatef(jogador.coordenadas.x, jogador.coordenadas.y, 0);
   glEnable(GL_TEXTURE_2D);
+  glEnable(GL_BLEND);
     glBindTexture(GL_TEXTURE_2D, jogador.texturaAtual);
     glBegin(GL_QUADS);
       glTexCoord2f(0, 0); glVertex3f(-jogador.tamanho, -jogador.tamanho,  0);
@@ -57,6 +62,7 @@ void desenhaPersonagem(struct personagem jogador, struct posicao tamanhoTela){
       glTexCoord2f(0, 1); glVertex3f(-jogador.tamanho,  jogador.tamanho,  0);
     glEnd();
   glPopMatrix();
+  glDisable(GL_BLEND);
   glDisable(GL_TEXTURE_2D);
   desenhaVidas(jogador, tamanhoTela);
   return;
@@ -78,31 +84,13 @@ int moveLeft(struct personagem perso, int tam){
   return perso.coordenadas.x;
 }
 
-GLuint texturaPersonagem(struct personagem perso) {
-  perso.textura = SOIL_load_OGL_texture(
-    "imagens/Ninja1.png",
-    SOIL_LOAD_AUTO,
-    SOIL_CREATE_NEW_ID,
-    SOIL_FLAG_INVERT_Y
-  );
-}
-int texturaVida (int textura){
-  textura = SOIL_load_OGL_texture(
-    "imagens/coracao2.png",
-    SOIL_LOAD_AUTO,
-    SOIL_CREATE_NEW_ID,
-    SOIL_FLAG_INVERT_Y
-  );
-}
-
 struct personagem setupPersonagem( struct personagem perso, int x, int y, int tam, int vidas){
     perso.coordenadas.x= x;
     perso.coordenadas.y= y;
     perso.tamanho=tam;
     perso.vidas=vidas;
-    perso.textura=texturaPersonagem(perso);
     perso.texturaAtual=perso.textura;
-    perso.texturaVidas=texturaVida(perso.texturaVidas);
+    perso.estado=ativo;
     return perso;
 }
 

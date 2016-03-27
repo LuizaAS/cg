@@ -6,8 +6,8 @@
 #include <time.h>
 #include "menu.h"
 #include "parada.h"
+#include "textura.h"
 #include "personagem.h"
-
 
 //Variaveis globais
 struct parametrosJogo parametro;
@@ -16,12 +16,14 @@ struct parada obj[qntParadas];
 
 void animacao (){
   int aux;
-  parametro.tempoDeJogo++;
-  paradasCaem(obj , &jogador, &parametro);
-  parametro.tempoEntreCriaParadas++;
-  piscaPersonagem (&jogador);
-  if (parametro.tempoEntreCriaParadas>40)
-    parametro.tempoEntreCriaParadas = 0;
+  if (parametro.telaAtual==jogo){
+    parametro.tempoDeJogo++;
+    paradasCaem(obj , &jogador, &parametro);
+    parametro.tempoEntreCriaParadas++;
+    piscaPersonagem (&jogador);
+    if (parametro.tempoEntreCriaParadas>40)
+      parametro.tempoEntreCriaParadas = 0;
+  }
   glutPostRedisplay();
 }
 
@@ -29,15 +31,16 @@ void desenhaCena(void) {
   glClear(GL_COLOR_BUFFER_BIT);
   desenhaFundo(parametro);
   if(parametro.telaAtual==jogo){
+    glColor4f(1,1,1,1);
     desenhaPersonagem(jogador, parametro.tamanhoTela);
     desenhaParada(obj);
   }
   glutSwapBuffers();
 }
-// Inicia algumas vari�veis de estado
 
 void redimensiona(int w, int h) {
-   glViewport(0, 0, 500, 500);
+    float ra=w/h; // razao de aspecto (nao funciona)
+   glViewport(0, 0, w, h);
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
    glOrtho(-w/2, w/2, -h/2, h/2, -1, 1);
@@ -46,7 +49,36 @@ void redimensiona(int w, int h) {
    parametro.tamanhoTela.x= w;
    parametro.tamanhoTela.y= h;
 }
-
+void mouse (int button, int state, int x, int y) { 
+  struct posicao mouse;
+  converteCoordenadas(x, y,&mouse, parametro.tamanhoTela);
+  if (button==GLUT_LEFT_BUTTON){
+    switch(parametro.telaAtual){
+      case jogo:
+        break;
+      case confirmaSair:
+        if(clique(mouse, parametro.sim))
+          exit(0);
+        else if(clique(mouse, parametro.nao))
+          parametro.telaAtual=parametro.telaAnterior;
+        break;
+      case confirmaReiniciar:
+        if(clique(mouse, parametro.sim)){
+          parametro.telaAtual=inicial;
+          reinicia(&parametro, obj, &jogador);
+        }
+        else if(clique(mouse, parametro.nao))
+            parametro.telaAtual=parametro.telaAnterior;
+        break;
+      case inicial:
+        if(clique(mouse, parametro.play)){
+          reinicia(&parametro, obj, &jogador);
+          parametro.telaAtual=jogo;
+        }
+        break;
+    }
+  }
+}
 void teclaEspecial(int key, int x, int y){
   switch(key) {
     case GLUT_KEY_RIGHT:
@@ -59,23 +91,21 @@ void teclaEspecial(int key, int x, int y){
       break;
   }
   if (parametro.telaAtual==gameOver){
-    inicializa(&parametro, &jogador, obj);
     parametro.telaAtual=inicial;
   }
   glutPostRedisplay();
 }
-// Callback de evento de teclado
+
 void teclado(unsigned char key, int x, int y) {
   switch(key) {
     case 27:
-      exit(0);
+      parametro.telaAnterior = parametro.telaAtual;
+      parametro.telaAtual = confirmaSair;
       break;
     case 'r':
     case 'R':
-      if (parametro.telaAtual==jogo){
-        parametro.telaAtual=inicial;
-        inicializa(&parametro, &jogador, obj);
-      }
+      parametro.telaAnterior = parametro.telaAtual;
+      parametro.telaAtual = confirmaReiniciar;
       break;
     case 'p':
     case 'P':
@@ -87,8 +117,7 @@ void teclado(unsigned char key, int x, int y) {
       }
     case 's':
     case 'S':
-      if (parametro.telaAtual==inicial)
-        parametro.telaAtual=jogo;
+
     default:
       break;
   }
@@ -96,6 +125,20 @@ void teclado(unsigned char key, int x, int y) {
     parametro.telaAtual=inicial;
   }
   glutPostRedisplay();
+}
+
+void inicializa() {
+    glClearColor(1, 1, 1, 0);
+    texturaParametro(&parametro);
+    texturaParada(obj);
+    jogador.textura=texturaPersonagem(jogador);
+    jogador.texturaVidas=texturaVida(jogador.texturaVidas);
+    parametro.tamanhoTela.x = 500;
+    parametro.tamanhoTela.y =600;
+    glutReshapeFunc(redimensiona);
+    jogador=setupPersonagem(jogador,-50,-50,25,3);
+    setupParada(obj, parametro);
+    setupParametros(&parametro);  
 }
 
 int main(int argc, char **argv){
@@ -107,10 +150,11 @@ int main(int argc, char **argv){
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Luiza TP1");
     srand(time(NULL));
-    inicializa(&parametro, &jogador, obj);
+    inicializa();
     glutDisplayFunc(desenhaCena);
     glutReshapeFunc(redimensiona);
     glutKeyboardFunc(teclado);
+    glutMouseFunc(mouse);
     glutSpecialFunc(teclaEspecial);
     glutIdleFunc(animacao);
     glutMainLoop();

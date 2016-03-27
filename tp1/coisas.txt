@@ -1,0 +1,15 @@
+BUGS:
+
+as vezes o piscar n funciona (reiniciar as texturas q piscam)
+
+png nao transparente
+
+imagem inicial alongada
+
+A COLOCAR:
+
+barra de tempo
+
+animaçoes
+
+razao de aspecto

@@ -3,11 +3,14 @@
 #include <SOIL/SOIL.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "menu.h"
 #include "parada.h"
+#include "textura.h"
 #include "personagem.h"
 
 void desenhaParada(struct parada* p){
+	glEnable(GL_BLEND);
     for (int i = 0; i < qntParadas; ++i)    {
     	if (p[i].estado == ativo){
 	    	glPushMatrix();
@@ -24,6 +27,7 @@ void desenhaParada(struct parada* p){
 	  		glDisable(GL_TEXTURE_2D);
    		}
     }
+    glDisable(GL_BLEND);
 }
 
 int createParada(struct parada obj[], int i, int nParadasCriadas, struct parametrosJogo parametro){
@@ -55,22 +59,10 @@ void paradasCaem(struct parada obj[], struct personagem *jogador, struct paramet
   	}
 }
 
-void texturaParada(struct parada obj[]) {
-	for (int i = 0; i < qntParadas; ++i)
-	{
-		obj[i].textura = SOIL_load_OGL_texture(
-    	"imagens/estrela-ninja.png",
-   		SOIL_LOAD_AUTO,
-    	SOIL_CREATE_NEW_ID,
-    	SOIL_FLAG_INVERT_Y
-  		);
-	}
-}
 
 void setupParada(struct parada obj[], struct parametrosJogo parametro){
 	for (int i = 0; i < qntParadas; ++i) {
       obj[i].estado = inativo;
   	}
-  	texturaParada(obj);
   	createParada(obj, 0, 0, parametro); 
 }
