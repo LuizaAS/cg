@@ -9,11 +9,11 @@
 #include "textura.h"
 #include "personagem.h"
 
-
 void converteCoordenadas(int x, int y, struct posicao *mouse, struct posicao tamanhoTela){
 	mouse->y=-1*(y-(tamanhoTela.y/2));
 	mouse->x=x-(tamanhoTela.x/2);
 }
+
 bool clique(struct posicao mouse, struct botoes botao){
 	if ((mouse.y>=(botao.coordenadas.y-botao.tamanho.y))&&(mouse.y<=(botao.coordenadas.y+botao.tamanho.y))&&(mouse.x>=(botao.coordenadas.x-botao.tamanho.x))&&(mouse.x<=(botao.coordenadas.x+botao.tamanho.x))){    
 		return true;
