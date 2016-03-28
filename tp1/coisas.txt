@@ -8,7 +8,9 @@ imagem inicial alongada
 
 A COLOCAR:
 
-barra de tempo
+barra de tempo proporcao 662:68
+
+personagem 67:124
 
 animaçoes
 

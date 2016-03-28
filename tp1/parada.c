@@ -42,12 +42,11 @@ int createParada(struct parada obj[], int i, int nParadasCriadas, struct paramet
   	}
    return nParadasCriadas;
 }
-
 void paradasCaem(struct parada obj[], struct personagem *jogador, struct parametrosJogo *parametro){
 	for (int i = 0, nParadasCriadas = 0 ; i < qntParadas; ++i)  {
 		if (obj[i].coordenadas.y>-parametro->tamanhoTela.y/2 && obj[i].estado == ativo){
 		    obj[i].coordenadas.y-=1;
-		  	if((((obj[i].coordenadas.y+obj[i].tamanho)>=(jogador->coordenadas.y-jogador->tamanho)) && ((obj[i].coordenadas.y-obj[i].tamanho)<=(jogador->coordenadas.y+jogador->tamanho) )&& ((obj[i].coordenadas.x+obj[i].tamanho)>=(jogador->coordenadas.x-jogador->tamanho)) && ((obj[i].coordenadas.x-obj[i].tamanho)<=(jogador->coordenadas.x+jogador->tamanho)) && obj[i].estado == ativo) && jogador->estado==ativo) {
+		  	if((((obj[i].coordenadas.y+obj[i].tamanho)>=(jogador->coordenadas.y-jogador->tamanho.y)) && ((obj[i].coordenadas.y-obj[i].tamanho)<=(jogador->coordenadas.y+jogador->tamanho.y) )&& ((obj[i].coordenadas.x+obj[i].tamanho)>=(jogador->coordenadas.x-jogador->tamanho.x)) && ((obj[i].coordenadas.x-obj[i].tamanho)<=(jogador->coordenadas.x+jogador->tamanho.x)) && obj[i].estado == ativo) && jogador->estado==ativo) {
 		      obj[i].estado=inativo;
 		      personagemMorre(jogador, &parametro->telaAtual);
 	    	}
@@ -58,8 +57,6 @@ void paradasCaem(struct parada obj[], struct personagem *jogador, struct paramet
 		}
   	}
 }
-
-
 void setupParada(struct parada obj[], struct parametrosJogo parametro){
 	for (int i = 0; i < qntParadas; ++i) {
       obj[i].estado = inativo;

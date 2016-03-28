@@ -1,4 +1,4 @@
-enum Tela{ inicial, pausa, jogo, gameOver, confirmaSair, confirmaReiniciar};
+enum Tela{ inicial, pausa, jogo, gameOver, Win, confirmaSair, confirmaReiniciar};
 enum est{inativo, ativo};
 struct posicao{
 	int x;
@@ -12,12 +12,14 @@ struct botoes {
 struct parametrosJogo{
 	struct posicao tamanhoTela;
 	int tempoDeJogo;
+	int constanteTempo;
 	int tempoEntreCriaParadas;
 	int texturaJogo;
 	int texturaInicial;
 	int texturaPausa;
 	int texturaGameOver;
 	int texturaConfirma;
+	int texturaWin;
 	Tela telaAtual;
 	Tela telaAnterior;
 	struct botoes barraDeTempo;

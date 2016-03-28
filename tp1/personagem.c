@@ -56,10 +56,10 @@ void desenhaPersonagem(struct personagem jogador, struct posicao tamanhoTela){
   glEnable(GL_BLEND);
     glBindTexture(GL_TEXTURE_2D, jogador.texturaAtual);
     glBegin(GL_QUADS);
-      glTexCoord2f(0, 0); glVertex3f(-jogador.tamanho, -jogador.tamanho,  0);
-      glTexCoord2f(1, 0); glVertex3f( jogador.tamanho, -jogador.tamanho,  0);
-      glTexCoord2f(1, 1); glVertex3f( jogador.tamanho,  jogador.tamanho,  0);
-      glTexCoord2f(0, 1); glVertex3f(-jogador.tamanho,  jogador.tamanho,  0);
+      glTexCoord2f(0, 0); glVertex3f(-jogador.tamanho.x, -jogador.tamanho.y,  0);
+      glTexCoord2f(1, 0); glVertex3f( jogador.tamanho.x, -jogador.tamanho.y,  0);
+      glTexCoord2f(1, 1); glVertex3f( jogador.tamanho.x,  jogador.tamanho.y,  0);
+      glTexCoord2f(0, 1); glVertex3f(-jogador.tamanho.x,  jogador.tamanho.y,  0);
     glEnd();
   glPopMatrix();
   glDisable(GL_BLEND);
@@ -70,7 +70,7 @@ void desenhaPersonagem(struct personagem jogador, struct posicao tamanhoTela){
 
 int moveRight(struct personagem perso, int tam){
   perso.coordenadas.x+=25;
-  if(tam/2<perso.coordenadas.x+perso.tamanho){
+  if(tam/2<perso.coordenadas.x+perso.tamanho.x){
     perso.coordenadas.x-=25;
   }
   return perso.coordenadas.x;
@@ -78,7 +78,7 @@ int moveRight(struct personagem perso, int tam){
 
 int moveLeft(struct personagem perso, int tam){
   perso.coordenadas.x-=25;
-  if(-tam/2>perso.coordenadas.x-perso.tamanho){
+  if(-tam/2>perso.coordenadas.x-perso.tamanho.x){
     perso.coordenadas.x+=25;
   }
   return perso.coordenadas.x;
@@ -87,7 +87,8 @@ int moveLeft(struct personagem perso, int tam){
 struct personagem setupPersonagem( struct personagem perso, int x, int y, int tam, int vidas){
     perso.coordenadas.x= x;
     perso.coordenadas.y= y;
-    perso.tamanho=tam;
+    perso.tamanho.y=tam;
+    perso.tamanho.x=tam*67/124;
     perso.vidas=vidas;
     perso.texturaAtual=perso.textura;
     perso.estado=ativo;

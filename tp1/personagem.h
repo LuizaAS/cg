@@ -2,9 +2,9 @@ struct personagem{
 	struct posicao coordenadas;
   	GLuint texturaAtual;
   	GLuint textura;
+  	GLuint textura1;
   	GLuint texturaPuso;
-  	int tamanho; // id textura
-  	// int textura-pulo;
+  	struct posicao tamanho; 
   	int vidas;
  	int texturaVidas;
  	int tempoPiscando;

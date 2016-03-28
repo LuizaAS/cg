@@ -21,17 +21,21 @@ void animacao (){
     paradasCaem(obj , &jogador, &parametro);
     parametro.tempoEntreCriaParadas++;
     piscaPersonagem (&jogador);
-    if (parametro.tempoEntreCriaParadas>40)
+    if (parametro.tempoEntreCriaParadas>parametro.constanteTempo)
       parametro.tempoEntreCriaParadas = 0;
+    if (parametro.tempoDeJogo>800000){
+          parametro.telaAtual=Win;
+          printf("%d\n", parametro.tempoDeJogo);
+    }
   }
   glutPostRedisplay();
 }
 
 void desenhaCena(void) {
   glClear(GL_COLOR_BUFFER_BIT);
+  glColor4f(1,1,1,1);
   desenhaFundo(parametro);
   if(parametro.telaAtual==jogo){
-    glColor4f(1,1,1,1);
     desenhaPersonagem(jogador, parametro.tamanhoTela);
     desenhaParada(obj);
   }
@@ -90,7 +94,7 @@ void teclaEspecial(int key, int x, int y){
     default:
       break;
   }
-  if (parametro.telaAtual==gameOver){
+  if (parametro.telaAtual==gameOver||parametro.telaAtual== Win){
     parametro.telaAtual=inicial;
   }
   glutPostRedisplay();
@@ -121,7 +125,7 @@ void teclado(unsigned char key, int x, int y) {
     default:
       break;
   }
-  if (parametro.telaAtual==gameOver){
+  if (parametro.telaAtual==gameOver||parametro.telaAtual== Win){
     parametro.telaAtual=inicial;
   }
   glutPostRedisplay();
@@ -131,12 +135,12 @@ void inicializa() {
     glClearColor(1, 1, 1, 0);
     texturaParametro(&parametro);
     texturaParada(obj);
-    jogador.textura=texturaPersonagem(jogador);
+    texturaPersonagem(&jogador);
     jogador.texturaVidas=texturaVida(jogador.texturaVidas);
     parametro.tamanhoTela.x = 500;
     parametro.tamanhoTela.y =600;
     glutReshapeFunc(redimensiona);
-    jogador=setupPersonagem(jogador,-50,-50,25,3);
+    jogador=setupPersonagem(jogador,-50,-50,30,3);
     setupParada(obj, parametro);
     setupParametros(&parametro);  
 }

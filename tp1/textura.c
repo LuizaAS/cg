@@ -9,15 +9,20 @@
 #include "textura.h"
 #include "personagem.h"
 
-GLuint texturaPersonagem(struct personagem perso) {
-  perso.textura = SOIL_load_OGL_texture(
+void texturaPersonagem(struct personagem *perso) {
+  perso->textura = SOIL_load_OGL_texture(
     "imagens/img1-0.png",
     SOIL_LOAD_AUTO,
     SOIL_CREATE_NEW_ID,
     SOIL_FLAG_INVERT_Y
   );
+  perso->textura1 = SOIL_load_OGL_texture(
+    "imagens/img1-2.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
 }
-
 int texturaVida (int textura){
   textura = SOIL_load_OGL_texture(
     "imagens/coracao2.png",
@@ -63,6 +68,12 @@ void texturaParametro(struct parametrosJogo *parametros) {
     SOIL_CREATE_NEW_ID,
     SOIL_FLAG_INVERT_Y
   );
+  parametros->texturaWin = SOIL_load_OGL_texture(
+    "imagens/win.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
     parametros->texturaConfirma = SOIL_load_OGL_texture(
     "imagens/ctz.png",
     SOIL_LOAD_AUTO,
@@ -71,6 +82,12 @@ void texturaParametro(struct parametrosJogo *parametros) {
   );
     parametros->play.textura = SOIL_load_OGL_texture(
     "imagens/play1.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
+  parametros->barraDeTempo.textura = SOIL_load_OGL_texture(
+    "imagens/tempo.png",
     SOIL_LOAD_AUTO,
     SOIL_CREATE_NEW_ID,
     SOIL_FLAG_INVERT_Y

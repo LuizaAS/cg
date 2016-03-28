@@ -23,17 +23,20 @@ bool clique(struct posicao mouse, struct botoes botao){
 
 void reinicia(struct parametrosJogo *parametro, struct parada obj[], struct personagem *jogador) {
     glClearColor(1, 1, 1, 0);
-    *jogador=setupPersonagem(*jogador,-50,-50,25,3);
+    *jogador=setupPersonagem(*jogador,-50,-50,30,3);
     setupParada(obj, *parametro);
     setupParametros(parametro);  
 }
 
 void setupParametros(struct parametrosJogo *parametros){
+	parametros->constanteTempo=60;
 	parametros->tempoDeJogo=0;
 	parametros->tempoEntreCriaParadas=0;
 	setupBotoes(&parametros->play, -parametros->tamanhoTela.x/2+50, -parametros->tamanhoTela.y/2+100, 80, 80);
 	setupBotoes(&parametros->sim,-30, -10, 50, 50 );
 	setupBotoes(&parametros->nao,30, -10, 50, 50 );
+	int aux = parametros->tamanhoTela.x/2*68/662;
+	setupBotoes(&parametros->barraDeTempo,0,-parametros->tamanhoTela.y/2+20,parametros->tamanhoTela.x/2,aux);
 	desenhaFundo(*parametros);
 }
 void setupBotoes (struct botoes *botao, int x, int y, int tamx, int tamy)	{
@@ -73,6 +76,9 @@ void desenhaFundo(struct parametrosJogo parametros){
     	case gameOver:
     		glBindTexture(GL_TEXTURE_2D, parametros.texturaGameOver);
     		break;
+    	case Win:
+    		glBindTexture(GL_TEXTURE_2D, parametros.texturaWin);
+    		break;
     	case confirmaSair:
     	case confirmaReiniciar:
     		glBindTexture(GL_TEXTURE_2D, parametros.texturaConfirma);
@@ -94,10 +100,10 @@ void desenhaFundo(struct parametrosJogo parametros){
     		desenhaBotoes(parametros.barraDeTempo);
     		break;
     	case pausa:
-    		
     		break;
     	case gameOver:
-    		
+    		break;
+    	case Win:	
     		break;
     	case confirmaSair:
     	case confirmaReiniciar:
