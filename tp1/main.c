@@ -23,7 +23,7 @@ void animacao (){
     piscaPersonagem (&jogador);
     if (parametro.tempoEntreCriaParadas>parametro.constanteTempo)
       parametro.tempoEntreCriaParadas = 0;
-    if (parametro.tempoDeJogo>800000){
+    if (parametro.tempoDeJogo>tempoTotal){
           parametro.telaAtual=Win;
           printf("%d\n", parametro.tempoDeJogo);
     }
@@ -119,9 +119,6 @@ void teclado(unsigned char key, int x, int y) {
         if (parametro.telaAtual==jogo)
           parametro.telaAtual=pausa;
       }
-    case 's':
-    case 'S':
-
     default:
       break;
   }
@@ -144,7 +141,6 @@ void inicializa() {
     setupParada(obj, parametro);
     setupParametros(&parametro);  
 }
-
 int main(int argc, char **argv){
     glutInit(&argc, argv);
     glutInitContextVersion(1, 1);
@@ -153,6 +149,7 @@ int main(int argc, char **argv){
     glutInitWindowSize(500, 500);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Luiza TP1");
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     srand(time(NULL));
     inicializa();
     glutDisplayFunc(desenhaCena);

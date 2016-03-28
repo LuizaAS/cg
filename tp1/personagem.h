@@ -1,8 +1,8 @@
 struct personagem{
 	struct posicao coordenadas;
   	GLuint texturaAtual;
-  	GLuint textura;
-  	GLuint textura1;
+  	GLuint textura10;
+  	GLuint textura12;
   	GLuint texturaPuso;
   	struct posicao tamanho; 
   	int vidas;

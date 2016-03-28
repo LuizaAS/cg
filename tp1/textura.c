@@ -10,13 +10,13 @@
 #include "personagem.h"
 
 void texturaPersonagem(struct personagem *perso) {
-  perso->textura = SOIL_load_OGL_texture(
+  perso->textura10 = SOIL_load_OGL_texture(
     "imagens/img1-0.png",
     SOIL_LOAD_AUTO,
     SOIL_CREATE_NEW_ID,
     SOIL_FLAG_INVERT_Y
   );
-  perso->textura1 = SOIL_load_OGL_texture(
+  perso->textura12 = SOIL_load_OGL_texture(
     "imagens/img1-2.png",
     SOIL_LOAD_AUTO,
     SOIL_CREATE_NEW_ID,
@@ -86,19 +86,12 @@ void texturaParametro(struct parametrosJogo *parametros) {
     SOIL_CREATE_NEW_ID,
     SOIL_FLAG_INVERT_Y
   );
-  parametros->barraDeTempo.textura = SOIL_load_OGL_texture(
-    "imagens/tempo.png",
-    SOIL_LOAD_AUTO,
-    SOIL_CREATE_NEW_ID,
-    SOIL_FLAG_INVERT_Y
-  );
   parametros->sim.textura = SOIL_load_OGL_texture(
     "imagens/tick.png",
     SOIL_LOAD_AUTO,
     SOIL_CREATE_NEW_ID,
     SOIL_FLAG_INVERT_Y
   );
-
   parametros->nao.textura = SOIL_load_OGL_texture(
     "imagens/nao.png",
     SOIL_LOAD_AUTO,

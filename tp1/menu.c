@@ -35,8 +35,6 @@ void setupParametros(struct parametrosJogo *parametros){
 	setupBotoes(&parametros->play, -parametros->tamanhoTela.x/2+50, -parametros->tamanhoTela.y/2+100, 80, 80);
 	setupBotoes(&parametros->sim,-30, -10, 50, 50 );
 	setupBotoes(&parametros->nao,30, -10, 50, 50 );
-	int aux = parametros->tamanhoTela.x/2*68/662;
-	setupBotoes(&parametros->barraDeTempo,0,-parametros->tamanhoTela.y/2+20,parametros->tamanhoTela.x/2,aux);
 	desenhaFundo(*parametros);
 }
 void setupBotoes (struct botoes *botao, int x, int y, int tamx, int tamy)	{
@@ -48,6 +46,7 @@ void setupBotoes (struct botoes *botao, int x, int y, int tamx, int tamy)	{
 void desenhaBotoes(struct botoes botao){
   	glPushMatrix();
   	glTranslatef(botao.coordenadas.x, botao.coordenadas.y, 0);
+  	glEnable(GL_BLEND);
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, botao.textura);
     glBegin(GL_QUADS);
@@ -56,10 +55,20 @@ void desenhaBotoes(struct botoes botao){
         glTexCoord2f(1, 1); glVertex3f( botao.tamanho.x/2,  botao.tamanho.y/2,  0);
         glTexCoord2f(0, 1); glVertex3f(-botao.tamanho.x/2,  botao.tamanho.y/2,  0);
     glEnd();
+    glDisable(GL_TEXTURE_2D);
+    glDisable(GL_BLEND);
    	glPopMatrix();
-	glDisable(GL_TEXTURE_2D);
 }
-
+void desenhaTempo(struct parametrosJogo parametros){
+	glColor3f(0,0,0);
+    glBegin(GL_QUADS);
+        glVertex3f(-parametros.tamanhoTela.x/2, -parametros.tamanhoTela.y/2,  0);
+        glVertex3f( (parametros.tamanhoTela.x*parametros.tempoDeJogo/(tempoTotal)-parametros.tamanhoTela.x/2), -parametros.tamanhoTela.y/2,  0);
+        glVertex3f( (parametros.tamanhoTela.x*parametros.tempoDeJogo/(tempoTotal)-parametros.tamanhoTela.x/2), -parametros.tamanhoTela.y/2+10,  0);
+        glVertex3f(-parametros.tamanhoTela.x/2, -parametros.tamanhoTela.y/2+10,  0);
+    glEnd();
+    glColor4f(1,1,1,1);
+}
 void desenhaFundo(struct parametrosJogo parametros){
   	glPushMatrix();
     glEnable(GL_TEXTURE_2D);
@@ -97,7 +106,7 @@ void desenhaFundo(struct parametrosJogo parametros){
     		desenhaBotoes(parametros.play);
     		break;
     	case jogo:
-    		desenhaBotoes(parametros.barraDeTempo);
+    		desenhaTempo(parametros);
     		break;
     	case pausa:
     		break;

@@ -20,14 +20,16 @@ void personagemMorre(struct personagem *jogador, Tela *telaAtual){
 }
 void piscaPersonagem (struct personagem *jogador){
   if ( jogador->estado == inativo ){
-    GLint aux = jogador->texturaAtual;
-    jogador->texturaAtual = jogador->texturaPuso;
-    jogador->texturaPuso = aux;
     jogador->tempoPiscando++;
-    if(jogador->tempoPiscando == 200){
-      jogador->texturaAtual = jogador->textura;
-      jogador->tempoPiscando = 0;
-      jogador-> estado = ativo;
+    if(jogador->tempoPiscando%2 ==0){
+      GLint aux = jogador->texturaAtual;
+      jogador->texturaAtual = jogador->texturaPuso;
+      jogador->texturaPuso = aux;
+      if(jogador->tempoPiscando == 200){
+        jogador->texturaAtual = jogador->textura10;
+        jogador->tempoPiscando = 0;
+        jogador-> estado = ativo;
+      }
     }
   }
 }
@@ -90,8 +92,8 @@ struct personagem setupPersonagem( struct personagem perso, int x, int y, int ta
     perso.tamanho.y=tam;
     perso.tamanho.x=tam*67/124;
     perso.vidas=vidas;
-    perso.texturaAtual=perso.textura;
+    perso.texturaAtual=perso.textura10;
+    perso.texturaPuso=perso.textura12;
     perso.estado=ativo;
     return perso;
 }
-

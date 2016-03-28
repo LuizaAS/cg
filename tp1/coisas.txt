@@ -2,16 +2,26 @@ BUGS:
 
 as vezes o piscar n funciona (reiniciar as texturas q piscam)
 
-png nao transparente
-
-imagem inicial alongada
-
 A COLOCAR:
-
-barra de tempo proporcao 662:68
-
-personagem 67:124
 
 animaçoes
 
 razao de aspecto
+
+musica
+
+pular
+
+poderzinho
+
+FALTA FAZER:
+
+tutorial
+
+creditos
+
+video jogando
+
+Pelo menos três screenshots de diferentes cenas de seu jogo;
+
+Um arquivo README contendo (a) instruções para a compilação e execução, e (b) a lista de itens adicionais implementados em seu jogo.

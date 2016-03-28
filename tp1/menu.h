@@ -1,3 +1,4 @@
+#define tempoTotal 80000
 enum Tela{ inicial, pausa, jogo, gameOver, Win, confirmaSair, confirmaReiniciar};
 enum est{inativo, ativo};
 struct posicao{
@@ -11,7 +12,7 @@ struct botoes {
 };
 struct parametrosJogo{
 	struct posicao tamanhoTela;
-	int tempoDeJogo;
+	float tempoDeJogo;
 	int constanteTempo;
 	int tempoEntreCriaParadas;
 	int texturaJogo;
@@ -22,7 +23,6 @@ struct parametrosJogo{
 	int texturaWin;
 	Tela telaAtual;
 	Tela telaAnterior;
-	struct botoes barraDeTempo;
 	struct botoes play;
 	struct botoes sim;
 	struct botoes nao;
@@ -36,4 +36,5 @@ void reinicia(struct parametrosJogo *parametro, struct parada obj[], struct pers
 void setupParametros(struct parametrosJogo *parametros);
 void setupBotoes (struct botoes *botao, int x, int y, int tamx, int tamy);
 void desenhaBotoes(struct botoes botao);
+void desenhaTempo(struct parametrosJogo parametros);
 void desenhaFundo(struct parametrosJogo parametros);
