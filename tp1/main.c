@@ -4,28 +4,40 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <SFML/Audio.hpp>
 #include "menu.h"
 #include "parada.h"
 #include "textura.h"
 #include "personagem.h"
+#include "animacoes.h"
 
 //Variaveis globais
 struct parametrosJogo parametro;
 struct personagem jogador;
 struct parada obj[qntParadas];
 
+sf::Music musicColisao,musicGameOver,musicJogo,musicWin,musicInicial;
+void musicaColisao(){
+  musicColisao.play();
+}
 void animacao (){
   int aux;
-  if (parametro.telaAtual==jogo){
+  if (parametro.telaAtual==jogo)
+  {
     parametro.tempoDeJogo++;
     paradasCaem(obj , &jogador, &parametro);
     parametro.tempoEntreCriaParadas++;
-    piscaPersonagem (&jogador);
+    piscaPersonagem (&jogador, &parametro.telaAtual);
+    if (parametro.telaAtual==gameOver){
+      musicJogo.stop();
+      musicGameOver.play();
+    }
     if (parametro.tempoEntreCriaParadas>parametro.constanteTempo)
       parametro.tempoEntreCriaParadas = 0;
     if (parametro.tempoDeJogo>tempoTotal){
-          parametro.telaAtual=Win;
-          printf("%d\n", parametro.tempoDeJogo);
+      parametro.telaAtual=Win;
+      musicJogo.stop();
+      musicWin.play();
     }
   }
   glutPostRedisplay();
@@ -43,7 +55,6 @@ void desenhaCena(void) {
 }
 
 void redimensiona(int w, int h) {
-    float ra=w/h; // razao de aspecto (nao funciona)
    glViewport(0, 0, w, h);
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
@@ -70,6 +81,9 @@ void mouse (int button, int state, int x, int y) {
         if(clique(mouse, parametro.sim)){
           parametro.telaAtual=inicial;
           reinicia(&parametro, obj, &jogador);
+          musicJogo.stop(); 
+          musicInicial.setLoop(true);
+          musicInicial.play();
         }
         else if(clique(mouse, parametro.nao))
             parametro.telaAtual=parametro.telaAnterior;
@@ -78,6 +92,8 @@ void mouse (int button, int state, int x, int y) {
         if(clique(mouse, parametro.play)){
           reinicia(&parametro, obj, &jogador);
           parametro.telaAtual=jogo;
+          musicInicial.stop();
+          musicJogo.play();
         }
         break;
     }
@@ -86,16 +102,20 @@ void mouse (int button, int state, int x, int y) {
 void teclaEspecial(int key, int x, int y){
   switch(key) {
     case GLUT_KEY_RIGHT:
-      jogador.coordenadas.x = moveRight(jogador, parametro.tamanhoTela.x);
+      moveRight(&jogador, parametro.tamanhoTela.x);
       break;
     case GLUT_KEY_LEFT:
-      jogador.coordenadas.x = moveLeft(jogador, parametro.tamanhoTela.x);
+      moveLeft(&jogador, parametro.tamanhoTela.x);
       break;
     default:
       break;
   }
   if (parametro.telaAtual==gameOver||parametro.telaAtual== Win){
     parametro.telaAtual=inicial;
+    musicGameOver.stop();
+    musicWin.stop();
+    musicInicial.setLoop(true);
+    musicInicial.play();
   }
   glutPostRedisplay();
 }
@@ -124,6 +144,10 @@ void teclado(unsigned char key, int x, int y) {
   }
   if (parametro.telaAtual==gameOver||parametro.telaAtual== Win){
     parametro.telaAtual=inicial;
+    musicGameOver.stop();
+    musicWin.stop(); 
+    musicInicial.setLoop(true);
+    musicInicial.play();
   }
   glutPostRedisplay();
 }
@@ -137,9 +161,20 @@ void inicializa() {
     parametro.tamanhoTela.x = 500;
     parametro.tamanhoTela.y =600;
     glutReshapeFunc(redimensiona);
-    jogador=setupPersonagem(jogador,-50,-50,30,3);
+    jogador=setupPersonagem(jogador,-50,-150,30,3);
     setupParada(obj, parametro);
     setupParametros(&parametro);  
+    musicColisao.openFromFile("audios/colisao.ogg");
+    musicJogo.openFromFile("audios/jogo.ogg");
+    musicWin.openFromFile("audios/win.ogg");
+    musicInicial.openFromFile("audios/inicial.ogg");
+    musicWin.setVolume(50);
+    musicColisao.setVolume(75);
+    musicJogo.setVolume(50);
+    musicGameOver.setVolume(50);
+    musicInicial.setLoop(true);
+    musicInicial.play();
+    musicGameOver.openFromFile("audios/GameOver.ogg");
 }
 int main(int argc, char **argv){
     glutInit(&argc, argv);

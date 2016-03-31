@@ -1,4 +1,5 @@
-#define tempoTotal 80000
+#define tempoTotal 16000
+
 enum Tela{ inicial, pausa, jogo, gameOver, Win, confirmaSair, confirmaReiniciar};
 enum est{inativo, ativo};
 struct posicao{
@@ -27,6 +28,8 @@ struct parametrosJogo{
 	struct botoes sim;
 	struct botoes nao;
 };
+// funcao do main.c q toca quando o personagem é atingido
+void musicaColisao();
 // converte as coordenadas do mouse para o sistema de coordenadas do mundo
 void converteCoordenadas(int x, int y, struct posicao *mouse, struct posicao tamanhoTela);
 //verifica se o clique do mouse foi em um determinado botao

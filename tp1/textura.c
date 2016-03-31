@@ -4,20 +4,106 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <SFML/Audio.hpp>
 #include "menu.h"
 #include "parada.h"
 #include "textura.h"
 #include "personagem.h"
+#include "animacoes.h"
 
 void texturaPersonagem(struct personagem *perso) {
-  perso->textura10 = SOIL_load_OGL_texture(
+  perso->normal.textura[0] = SOIL_load_OGL_texture(
     "imagens/img1-0.png",
     SOIL_LOAD_AUTO,
     SOIL_CREATE_NEW_ID,
     SOIL_FLAG_INVERT_Y
   );
-  perso->textura12 = SOIL_load_OGL_texture(
+  perso->normal.textura[1] = SOIL_load_OGL_texture(
+    "imagens/img1-1.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
+  perso->normal.textura[2] = SOIL_load_OGL_texture(
     "imagens/img1-2.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
+  perso->dano.textura[0] = SOIL_load_OGL_texture(
+    "imagens/img2-0.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
+  perso->dano.textura[1] = SOIL_load_OGL_texture(
+    "imagens/img2-1.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
+  perso->dano.textura[2] = SOIL_load_OGL_texture(
+    "imagens/img2-2.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
+  perso->dano.textura[3] = SOIL_load_OGL_texture(
+    "imagens/img2-3.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
+  perso->dano.textura[4] = SOIL_load_OGL_texture(
+    "imagens/img2-4.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
+  perso->morre.textura[0] = SOIL_load_OGL_texture(
+    "imagens/img3-0.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
+  perso->morre.textura[1] = SOIL_load_OGL_texture(
+    "imagens/img3-1.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
+  perso->morre.textura[2] = SOIL_load_OGL_texture(
+    "imagens/img3-2.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
+  perso->morre.textura[3] = SOIL_load_OGL_texture(
+    "imagens/img3-3.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
+  perso->morre.textura[4] = SOIL_load_OGL_texture(
+    "imagens/img3-4.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
+  perso->morre.textura[5] = SOIL_load_OGL_texture(
+    "imagens/img3-5.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
+  perso->morre.textura[6] = SOIL_load_OGL_texture(
+    "imagens/img3-6.png",
+    SOIL_LOAD_AUTO,
+    SOIL_CREATE_NEW_ID,
+    SOIL_FLAG_INVERT_Y
+  );
+  perso->morre.textura[7] = SOIL_load_OGL_texture(
+    "imagens/img3-7.png",
     SOIL_LOAD_AUTO,
     SOIL_CREATE_NEW_ID,
     SOIL_FLAG_INVERT_Y

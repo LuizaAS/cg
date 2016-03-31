@@ -4,10 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <SFML/Audio.hpp>
 #include "menu.h"
 #include "parada.h"
 #include "textura.h"
 #include "personagem.h"
+#include "animacoes.h"
 
 void converteCoordenadas(int x, int y, struct posicao *mouse, struct posicao tamanhoTela){
 	mouse->y=-1*(y-(tamanhoTela.y/2));
@@ -23,7 +25,7 @@ bool clique(struct posicao mouse, struct botoes botao){
 
 void reinicia(struct parametrosJogo *parametro, struct parada obj[], struct personagem *jogador) {
     glClearColor(1, 1, 1, 0);
-    *jogador=setupPersonagem(*jogador,-50,-50,30,3);
+    *jogador=setupPersonagem(*jogador,-50,-150,30,3);
     setupParada(obj, *parametro);
     setupParametros(parametro);  
 }

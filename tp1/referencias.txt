@@ -1,22 +1,29 @@
 IMAGENS
 
 PERSONAGEM PRINCIPAL:
-http://www.ninjasoftware.net/images/NinjaSoftware.png 
-talves
 http://hellowhowru.com/
-https://lh5.googleusercontent.com/B8Gx6T7ts8-hrY1CWmfJKhv16DRcufGSAOO-kkcwqsmb9Sg6ImxVUO2IYo4p1dl68TAjGWlNE2KcIyeyTjJyBvb2ZE5uGH2wun8EDXwYCpwhvmG3GfhUGVJ_t63pPxfj
-http://images.clipartlogo.com/files/ss/original/150/15061753/ninja-stars.jpg
-https://s-media-cache-ak0.pinimg.com/236x/30/4e/33/304e33a3c8821bdcc7f7d2fa99beb53f.jpg
-http://xquatrox.deviantart.com/art/8-Bit-heart-stock-287592934
-http://revistaescola.abril.com.br/img/historia/castelo-medieval-g.jpg
-https://uploads.socialspirit.com.br/fanfics/historias/fanfiction-originais-game-over-3279373,180320151938.jpg
-http://www.fmanha.com.br/blogs/opinioes/wp-content/uploads/2014/04/pausa.jpg
-https://pixabay.com/pt/cron%C3%B3grafo-cron%C3%B4metro-rel%C3%B3gio-160753/
-https://encrypted-tbn3.gstatic.com/images?q=tbn%3AANd9GcT7vCYWIhlUM1B_v5h-hPGfpk3UEX3dryOgS0zeH5B6GOSBree0
-http://www.patternpictures.com/wp-content/uploads/2013/11/PP55400806-Old-Wall-of-stones-of-a-Medieval-Castle.jpg
-http://br.freepik.com/psd-gratis/tick-%E2%80%8B%E2%80%8B&-cross-botoes--psd_567544.htm
-http://theragefaces.tumblr.com/post/13807687477/you-win-this-time
 
+PARADA QUE CAI:
+https://s-media-cache-ak0.pinimg.com/236x/30/4e/33/304e33a3c8821bdcc7f7d2fa99beb53f.jpg
+
+VIDAS:
+http://xquatrox.deviantart.com/art/8-Bit-heart-stock-287592934
+
+PLANO DE FUNDOS:
+INICIAL: https://encrypted-tbn3.gstatic.com/images?q=tbn%3AANd9GcT7vCYWIhlUM1B_v5h-hPGfpk3UEX3dryOgS0zeH5B6GOSBree0
+JOGO: http://www.patternpictures.com/wp-content/uploads/2013/11/PP55400806-Old-Wall-of-stones-of-a-Medieval-Castle.jpg
+GAME OVER: https://uploads.socialspirit.com.br/fanfics/historias/fanfiction-originais-game-over-3279373,180320151938.jpg
+WIN: http://theragefaces.tumblr.com/post/13807687477/you-win-this-time
+PAUSA: http://www.fmanha.com.br/blogs/opinioes/wp-content/uploads/2014/04/pausa.jpg
+
+BOTOES:
+http://br.freepik.com/psd-gratis/tick-%E2%80%8B%E2%80%8B&-cross-botoes--psd_567544.htm
+
+
+
+SONS:
+youtube, baixado com https://www.youtube2mp3.cc/#conversion;
+http://www.aiomp3.com/download.php?mp3=_A79Jh6lha4;
 
 TABELA ASC:
 http://mywebspace.no.sapo.pt/info/tlp11/tabela_ascii.pdf 

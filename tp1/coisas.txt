@@ -1,14 +1,8 @@
-BUGS:
-
-as vezes o piscar n funciona (reiniciar as texturas q piscam)
-
 A COLOCAR:
 
-animaçoes
+animaçoes correndo
 
 razao de aspecto
-
-musica
 
 pular
 
@@ -23,5 +17,3 @@ creditos
 video jogando
 
 Pelo menos três screenshots de diferentes cenas de seu jogo;
-
-Um arquivo README contendo (a) instruções para a compilação e execução, e (b) a lista de itens adicionais implementados em seu jogo.

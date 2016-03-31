@@ -4,14 +4,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <SFML/Audio.hpp>
 #include "menu.h"
 #include "parada.h"
 #include "textura.h"
 #include "personagem.h"
+#include "animacoes.h"
 
 void desenhaParada(struct parada* p){
 	glEnable(GL_BLEND);
-    for (int i = 0; i < qntParadas; ++i)    {
+    for (int i = 0; i < qntParadas; ++i){
     	if (p[i].estado == ativo){
 	    	glPushMatrix();
 	        glTranslatef(p[i].coordenadas.x, p[i].coordenadas.y, 0);
@@ -48,7 +50,9 @@ void paradasCaem(struct parada obj[], struct personagem *jogador, struct paramet
 		    obj[i].coordenadas.y-=1;
 		  	if((((obj[i].coordenadas.y+obj[i].tamanho)>=(jogador->coordenadas.y-jogador->tamanho.y)) && ((obj[i].coordenadas.y-obj[i].tamanho)<=(jogador->coordenadas.y+jogador->tamanho.y) )&& ((obj[i].coordenadas.x+obj[i].tamanho)>=(jogador->coordenadas.x-jogador->tamanho.x)) && ((obj[i].coordenadas.x-obj[i].tamanho)<=(jogador->coordenadas.x+jogador->tamanho.x)) && obj[i].estado == ativo) && jogador->estado==ativo) {
 		      obj[i].estado=inativo;
-		      personagemMorre(jogador, &parametro->telaAtual);
+		      jogador->dano.contador=0;
+		      musicaColisao();
+		      personagemMorre(jogador);
 	    	}
 		}
 		else{
