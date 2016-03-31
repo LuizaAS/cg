@@ -133,11 +133,13 @@ void teclado(unsigned char key, int x, int y) {
       break;
     case 'p':
     case 'P':
-      if (parametro.telaAtual==pausa)
+      if (parametro.telaAtual==pausa){
         parametro.telaAtual=jogo;
-      else{
-        if (parametro.telaAtual==jogo)
+        musicJogo.play();
+      }
+      else if (parametro.telaAtual==jogo){
           parametro.telaAtual=pausa;
+          musicJogo.pause();
       }
     default:
       break;
