@@ -44,7 +44,7 @@ int createParada(struct parada obj[], int i, int nParadasCriadas, struct paramet
   	}
    return nParadasCriadas;
 }
-void paradasCaem(struct parada obj[], struct personagem *jogador, struct parametrosJogo *parametro){
+void paradasCaem(struct parada obj[], struct personagem *jogador, struct personagem *jogador2, struct parametrosJogo *parametro){
 	for (int i = 0, nParadasCriadas = 0 ; i < qntParadas; ++i)  {
 		if (obj[i].coordenadas.y>-parametro->tamanhoTela.y/2 && obj[i].estado == ativo){
 		    obj[i].coordenadas.y-=1;
@@ -53,6 +53,12 @@ void paradasCaem(struct parada obj[], struct personagem *jogador, struct paramet
 		      jogador->dano.contador=0;
 		      musicaColisao();
 		      personagemMorre(jogador);
+	    	}
+	    	if((((obj[i].coordenadas.y+obj[i].tamanho)>=(jogador2->coordenadas.y-jogador2->tamanho.y)) && ((obj[i].coordenadas.y-obj[i].tamanho)<=(jogador2->coordenadas.y+jogador2->tamanho.y) )&& ((obj[i].coordenadas.x+obj[i].tamanho)>=(jogador2->coordenadas.x-jogador2->tamanho.x)) && ((obj[i].coordenadas.x-obj[i].tamanho)<=(jogador2->coordenadas.x+jogador2->tamanho.x)) && obj[i].estado == ativo) && jogador2->estado==ativo) {
+		      obj[i].estado=inativo;
+		      jogador2->dano.contador=0;
+		      musicaColisao();
+		      personagemMorre(jogador2);
 	    	}
 		}
 		else{

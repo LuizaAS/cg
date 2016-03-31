@@ -11,7 +11,7 @@ struct personagem{
   	GLuint texturaPuso;
   	struct posicao tamanho; 
   	int vidas;
- 	int texturaVidas;
+  	struct botoes Vidas;
  	int tempoPiscando;
  	est estado;
  	struct animacao normal;
@@ -26,4 +26,5 @@ void desenhaVidas (struct personagem jogador, struct posicao tamanhoTela);
 void desenhaPersonagem(struct personagem jogador, struct posicao tamanhoTela);
 void moveRight(struct personagem *perso, int tam);
 void moveLeft(struct personagem *perso, int tam);
+struct botoes setupVidas(botoes Vidas, int x, int y);
 struct personagem setupPersonagem( struct personagem perso, int x, int y, int tam, int vidas);

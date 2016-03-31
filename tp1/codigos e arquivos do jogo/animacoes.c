@@ -18,7 +18,7 @@ void piscaPersonagem (struct personagem *jogador, Tela *telaAtual){
        if(jogador->tempoPiscando<50)
          anima(&jogador->morre, jogador);
        else{
-        *telaAtual = gameOver;
+        game_Over();
        }
      }
   }
@@ -45,7 +45,7 @@ void anima (struct animacao *anima,struct personagem *jogador){
   jogador->texturaAtual=anima->textura[anima->contador];
   anima->contador++;
   }
-  else {
+  else if(jogador->vidas>0){
     jogador->texturaAtual=jogador->normal.textura[0];
     jogador->texturaPuso=jogador->normal.textura[2];
     if(anima->reinicia)

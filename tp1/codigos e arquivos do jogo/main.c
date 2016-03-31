@@ -14,24 +14,36 @@
 //Variaveis globais
 struct parametrosJogo parametro;
 struct personagem jogador;
+struct personagem jogador2;
 struct parada obj[qntParadas];
 
 sf::Music musicColisao,musicGameOver,musicJogo,musicWin,musicInicial;
 void musicaColisao(){
   musicColisao.play();
 }
+void game_Over(){
+  if (parametro.modo==players2){
+    if(jogador.vidas==0&&jogador2.vidas==0){
+      parametro.telaAtual = gameOver;
+      musicJogo.stop();
+      musicGameOver.play();
+    }
+  }
+  else{
+    parametro.telaAtual = gameOver;
+      musicJogo.stop();
+      musicGameOver.play();
+  }
+}
 void animacao (){
   int aux;
   if (parametro.telaAtual==jogo)
   {
     parametro.tempoDeJogo++;
-    paradasCaem(obj , &jogador, &parametro);
+    paradasCaem(obj , &jogador, &jogador2, &parametro);
     parametro.tempoEntreCriaParadas++;
     piscaPersonagem (&jogador, &parametro.telaAtual);
-    if (parametro.telaAtual==gameOver){
-      musicJogo.stop();
-      musicGameOver.play();
-    }
+    piscaPersonagem (&jogador2, &parametro.telaAtual);
     if (parametro.tempoEntreCriaParadas>parametro.constanteTempo)
       parametro.tempoEntreCriaParadas = 0;
     if (parametro.tempoDeJogo>tempoTotal){
@@ -49,6 +61,9 @@ void desenhaCena(void) {
   desenhaFundo(parametro);
   if(parametro.telaAtual==jogo){
     desenhaPersonagem(jogador, parametro.tamanhoTela);
+    if(parametro.modo==players2){
+      desenhaPersonagem(jogador2, parametro.tamanhoTela);
+    }
     desenhaParada(obj);
   }
   glutSwapBuffers();
@@ -80,7 +95,7 @@ void mouse (int button, int state, int x, int y) {
       case confirmaReiniciar:
         if(clique(mouse, parametro.sim)){
           parametro.telaAtual=inicial;
-          reinicia(&parametro, obj, &jogador);
+          reinicia(&parametro, obj, &jogador, &jogador2);
           musicJogo.stop(); 
           musicInicial.setLoop(true);
           musicInicial.play();
@@ -90,7 +105,7 @@ void mouse (int button, int state, int x, int y) {
         break;
       case inicial:
         if(clique(mouse, parametro.play)){
-          reinicia(&parametro, obj, &jogador);
+          reinicia(&parametro, obj, &jogador, &jogador2);
           parametro.telaAtual=jogo;
           musicInicial.stop();
           musicJogo.play();
@@ -143,6 +158,16 @@ void teclado(unsigned char key, int x, int y) {
       }
     default:
       break;
+    case 'a':
+    case 'A':
+      if(parametro.modo==players2) 
+      moveLeft(&jogador2, parametro.tamanhoTela.x);
+      break;
+    case 'd':
+    case 'D':
+      if(parametro.modo==players2)
+      moveRight(&jogador2, parametro.tamanhoTela.x);
+      break;
   }
   if (parametro.telaAtual==gameOver||parametro.telaAtual== Win){
     parametro.telaAtual=inicial;
@@ -159,11 +184,16 @@ void inicializa() {
     texturaParametro(&parametro);
     texturaParada(obj);
     texturaPersonagem(&jogador);
-    jogador.texturaVidas=texturaVida(jogador.texturaVidas);
+    texturaPersonagem(&jogador2);
+    texturaVida(&jogador.Vidas.textura);
+    texturaVida(&jogador2.Vidas.textura);
     parametro.tamanhoTela.x = 500;
     parametro.tamanhoTela.y =600;
     glutReshapeFunc(redimensiona);
     jogador=setupPersonagem(jogador,-50,-150,30,3);
+    jogador2=setupPersonagem(jogador2,-100,-150,30,3);
+    jogador.Vidas=setupVidas(jogador.Vidas, parametro.tamanhoTela.x/2-50,parametro.tamanhoTela.y/2-50);
+    jogador2.Vidas=setupVidas(jogador2.Vidas, -parametro.tamanhoTela.x/2+110,parametro.tamanhoTela.y/2-50);
     setupParada(obj, parametro);
     setupParametros(&parametro);  
     musicColisao.openFromFile("audios/colisao.ogg");
@@ -177,6 +207,7 @@ void inicializa() {
     musicInicial.setLoop(true);
     musicInicial.play();
     musicGameOver.openFromFile("audios/GameOver.ogg");
+    parametro.modo=players2;
 }
 int main(int argc, char **argv){
     glutInit(&argc, argv);

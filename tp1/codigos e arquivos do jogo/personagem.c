@@ -21,9 +21,9 @@ void desenhaVidas (struct personagem jogador, struct posicao tamanhoTela){
   glEnable(GL_BLEND);
   for (int i = 0, distancia = 0; i < jogador.vidas; ++i, distancia+=20){
   glPushMatrix();                 
-  glTranslatef(tamanhoTela.x/2-50-distancia,tamanhoTela.y/2-50 , 0);
+  glTranslatef(jogador.Vidas.coordenadas.x-distancia,jogador.Vidas.coordenadas.y , 0);
   glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, jogador.texturaVidas);
+    glBindTexture(GL_TEXTURE_2D, jogador.Vidas.textura);
     glBegin(GL_QUADS);
       glTexCoord2f(0, 0); glVertex3f(-10, -10,  0);
       glTexCoord2f(1, 0); glVertex3f( 10, -10,  0);
@@ -76,6 +76,10 @@ void moveLeft(struct personagem *perso, int tam){
   if(-tam/2>perso->coordenadas.x-perso->tamanho.x){
     perso->coordenadas.x+=25;
   }
+}
+struct botoes setupVidas(botoes Vidas, int x, int y){
+    Vidas.coordenadas.y=y;
+    Vidas.coordenadas.x=x;
 }
 
 struct personagem setupPersonagem( struct personagem perso, int x, int y, int tam, int vidas){

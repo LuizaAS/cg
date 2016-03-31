@@ -23,9 +23,10 @@ bool clique(struct posicao mouse, struct botoes botao){
 	return false;
 }
 
-void reinicia(struct parametrosJogo *parametro, struct parada obj[], struct personagem *jogador) {
+void reinicia(struct parametrosJogo *parametro, struct parada obj[], struct personagem *jogador, struct personagem *jogador2) {
     glClearColor(1, 1, 1, 0);
     *jogador=setupPersonagem(*jogador,-50,-150,30,3);
+    *jogador2=setupPersonagem(*jogador2,-100,-150,30,3);
     setupParada(obj, *parametro);
     setupParametros(parametro);  
 }

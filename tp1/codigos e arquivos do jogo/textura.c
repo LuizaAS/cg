@@ -109,8 +109,8 @@ void texturaPersonagem(struct personagem *perso) {
     SOIL_FLAG_INVERT_Y
   );
 }
-int texturaVida (int textura){
-  textura = SOIL_load_OGL_texture(
+void texturaVida (GLuint *textura){
+  *textura = SOIL_load_OGL_texture(
     "imagens/coracao2.png",
     SOIL_LOAD_AUTO,
     SOIL_CREATE_NEW_ID,
